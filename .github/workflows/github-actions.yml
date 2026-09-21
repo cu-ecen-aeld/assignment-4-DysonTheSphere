@@ -7,7 +7,8 @@ on:
             - '*'
 jobs:
     full-test:
-        container: cuaesd/aesd-autotest:24-assignment4-buildroot
+        # Let's live a little on bare-metal
+        #container: cuaesd/aesd-autotest:24-assignment4-buildroot
         runs-on: self-hosted
         timeout-minutes: 120
         steps:
