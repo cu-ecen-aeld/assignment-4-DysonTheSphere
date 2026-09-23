@@ -7,8 +7,7 @@ on:
             - '*'
 jobs:
     full-test:
-        # Let's live a little on bare-metal
-        #container: cuaesd/aesd-autotest:24-assignment4-buildroot
+        container: cuaesd/aesd-autotest:24-assignment4-buildroot
         runs-on: self-hosted
         timeout-minutes: 120
         steps:
@@ -17,16 +16,7 @@ jobs:
             run: git submodule update --init --recursive
           - uses: webfactory/ssh-agent@v0.5.3
             with:
-                # this is an appendix of a key, opens nothing, only exists to make the autograder function
-                # I had to explicity permatrust localhost ssh for the QEMU instance because the key changes every time
-                ssh-private-key: |
-                  -----BEGIN OPENSSH PRIVATE KEY-----
-                  b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-                  QyNTUxOQAAACDl+xnv8T4IATMzaALxA52aRZmKmQ5Fp1+dMt46sqWDCAAAAJhXjTtuV407
-                  bgAAAAtzc2gtZWQyNTUxOQAAACDl+xnv8T4IATMzaALxA52aRZmKmQ5Fp1+dMt46sqWDCA
-                  AAAECGTkJLOFarnf66KLJa5MtpQQDxIyruazG4iohq9i9GauX7Ge/xPggBMzNoAvEDnZpF
-                  mYqZDkWnX50y3jqypYMIAAAAFGR1bW15LWF1dG9ncmFkZXIta2V5AQ==
-                  -----END OPENSSH PRIVATE KEY-----
+                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           - name: Run full test
             env:
               GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
